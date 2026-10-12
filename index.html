@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudentHub | Student Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">S</div>
+
+            <div>
+                <h2>StudentHub</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="#" class="nav-item active">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="#students" class="nav-item">
+                <span>◉</span>
+                Students
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Student Management</p>
+            <small>v1.0</small>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Manage your students efficiently.</p>
+            </div>
+
+            <button class="add-btn" onclick="openModal()">
+                + Add Student
+            </button>
+
+        </header>
+
+
+        <!-- Statistics -->
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div>
+                    <p>Total Students</p>
+                    <h2 id="totalStudents">0</h2>
+                </div>
+
+                <div class="stat-icon blue">
+                    👥
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div>
+                    <p>Total Courses</p>
+                    <h2 id="totalCourses">0</h2>
+                </div>
+
+                <div class="stat-icon purple">
+                    🎓
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div>
+                    <p>Recently Added</p>
+                    <h2 id="recentStudents">0</h2>
+                </div>
+
+                <div class="stat-icon green">
+                    ✨
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Students Section -->
+        <section class="students-section" id="students">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Students</h2>
+                    <p>View and manage all student records.</p>
+                </div>
+
+            </div>
+
+
+            <!-- Search and Filter -->
+            <div class="controls">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by name, roll number or email..."
+                        oninput="displayStudents()"
+                    >
+
+                </div>
+
+
+                <select id="courseFilter" onchange="displayStudents()">
+
+                    <option value="all">
+                        All Courses
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Student Table -->
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Student</th>
+                            <th>Roll Number</th>
+                            <th>Course</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="studentTable">
+
+                    </tbody>
+
+                </table>
+
+
+                <div id="emptyState" class="empty-state">
+
+                    <div class="empty-icon">
+                        🎓
+                    </div>
+
+                    <h3>No students found</h3>
+
+                    <p>
+                        Add a student to get started.
+                    </p>
+
+                    <button onclick="openModal()">
+                        + Add Student
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Student Modal -->
+    <div id="studentModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="modalTitle">
+                        Add Student
+                    </h2>
+
+                    <p>
+                        Enter the student's details below.
+                    </p>
+                </div>
+
+                <button class="close-btn" onclick="closeModal()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="studentForm">
+
+                <input
+                    type="hidden"
+                    id="studentId"
+                >
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Roll Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="roll"
+                            placeholder="e.g. CS001"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Course
+                        </label>
+
+                        <select id="course" required>
+
+                            <option value="">
+                                Select course
+                            </option>
+
+                            <option value="Computer Science">
+                                Computer Science
+                            </option>
+
+                            <option value="Information Technology">
+                                Information Technology
+                            </option>
+
+                            <option value="Artificial Intelligence">
+                                Artificial Intelligence
+                            </option>
+
+                            <option value="Electronics">
+                                Electronics
+                            </option>
+
+                            <option value="Mechanical">
+                                Mechanical
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="student@example.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="closeModal()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Student
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
