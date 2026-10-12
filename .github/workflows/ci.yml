@@ -1,0 +1,33 @@
+name: Student Management System CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  validate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify project files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "All required project files exist."
+
+      - name: Validate JavaScript
+        run: |
+          node --check script.js
+          echo "JavaScript syntax validation passed."
